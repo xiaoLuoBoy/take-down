@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.horqian.api.mapper.sys.SysRoleMapper">
+
+
+    <update id="dealRelate">
+        UPDATE sys_user SET role_name = #{name} WHERE role_id = #{id};
+    </update>
+
+
+    <select id="list" parameterType="java.lang.String" resultType="java.util.Map">
+        ${str}
+    </select>
+
+    <update id="update" parameterType="java.lang.String" >
+        ${str}
+    </update>
+
+    <select id="select" parameterType="java.lang.String" resultType="java.util.Map">
+        ${str}
+    </select>
+
+    <delete id="delete" parameterType="java.lang.String" >
+        ${str}
+    </delete>
+
+    <insert id="insert" parameterType="java.lang.String" >
+        ${str}
+    </insert>
+
+    <select id="count" parameterType="java.lang.String" resultType="java.lang.Integer">
+        ${str}
+    </select>
+
+</mapper>

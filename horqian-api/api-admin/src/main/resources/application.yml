@@ -1,0 +1,67 @@
+spring:
+  profiles:
+    active: dev
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+    static-locations: classpath:/resources/
+
+  servlet:
+    multipart:
+      max-file-size: 2GB
+      max-request-size: 2GB
+
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  ssl:
+    enabled: false
+
+
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: shell-customer-secret #JWT加解密使用的密钥
+  expiration: 86400 #JWT的超期限时间(60*60*24)
+  tokenHead: 'Bearer ' #JWT负载中拿到开头
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.horqian.api.entity.*
+  type-handlers-package: com.horqian.api.config.mp
+
+  global-config:
+    db-config:
+      #主键类型
+      id-type: auto
+      #逻辑删除配置
+      logic-delete-field: delete
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      #是否开启大写命名
+      capital-mode: false
+      table-underline: true
+
+  configuration:
+    #配置返回数据库(column下划线命名&&返回java实体是驼峰命名)，自动匹配无需as（没开启这个，SQL需要写as： select user_id as userId）
+    mapUnderscoreToCamelCase: true
+    cacheEnabled: true
+    #配置JdbcTypeForNull, oracle数据库必须配置
+    jdbc-type-for-null: 'null'
+
+msg:
+  qywx:
+    exception:
+      # todo 部署时设为ture
+      log: false
+      content: 后台系统
+      url: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=d7e46632-4d2e-4253-ab62-0c7e647a5b8a
+      package-name: com.horqian.api
+
+rsa:
+  encrypt:
+    open: true # 是否开启加密 true  or  false
+    showLog: true # 是否打印加解密log true  or  false
+    publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAocrZPyv7qYi49R/1bPtPSy+SdPwMqn0qkL99LVoS1+z9AQTzjpfrGgWBe9iEObbmW2yYWRqtFGuPPg3GkXvlyofCqu8jFDRsw/NEBvrdxME6FpQyfgcsz/CpVv4BlTeZLauWeWUfjl92guvo9Mw8Bz0NcRbjD8Kl+OSwjC09YB5t5n83f86Yb0o5yLUNkFTfJhGKZkQja9JgaNVo3V/PwQefvg9SGSdgjwrgWO9ANuEYbPsEHIsqMeUyUqBxt7MQoQs3NsMnN3nnU+/9rgQmeNy2JQs3n/dPJEpcA29zEfnqc1KBVonmBY9M/j9zQ82MeQBwQarGm7OLDxNSw5b/kQIDAQAB
+    privateKey: MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQChytk/K/upiLj1H/Vs+09LL5J0/AyqfSqQv30tWhLX7P0BBPOOl+saBYF72IQ5tuZbbJhZGq0Ua48+DcaRe+XKh8Kq7yMUNGzD80QG+t3EwToWlDJ+ByzP8KlW/gGVN5ktq5Z5ZR+OX3aC6+j0zDwHPQ1xFuMPwqX45LCMLT1gHm3mfzd/zphvSjnItQ2QVN8mEYpmRCNr0mBo1WjdX8/BB5++D1IZJ2CPCuBY70A24Rhs+wQciyox5TJSoHG3sxChCzc2wyc3eedT7/2uBCZ43LYlCzef908kSlwDb3MR+epzUoFWieYFj0z+P3NDzYx5AHBBqsabs4sPE1LDlv+RAgMBAAECggEAEwJWTAnK47xgnsxGdauBQYAxYPVMN6vFGISnHHD8zcnWYAxI4XQP91q2P+rMfkty/ULhE3cC5udMSSotLmK0OPuCb7rxECqorM0kLP3EmJ1rScPXut708OmBu+rUHMgPg0Ipx9GNx5iHwBIfqMNmOiN+NM9PlkZ0Ya3c4FtgXq6EXanj3uXHfPBV7N2yCVka4FxxI8kcl/jlEplXIFyRsD2SS1U52pc4Cab9hU3rSCVM1FJPfquOWfnBO0tm+YdgceciiZ/ecn5GrmABlch2hsr4LKaIbC1o1jhp4BhChzfijCQueM4099fiJ2V0cXJRBG9/qbIR1BHveE7jPd+SwQKBgQDnCwqVFH+P6T4bLb2aUsFgvOkUB8d3Epv8WgL/n3Mc0r1vpu74tak2FdfMxCQjiJ19r2ICXAusbYzd//iXUitvpw/ckOJKPIvoBY0erS7ZU1feUv5scjPlRrrBFzvFHXRCeKIic4RJhGcPLTq1IYnXY5GoFa6v6nN0aUOnj+ILTQKBgQCzRNbcYBU81IP6hqHXz33PN9ewehLNjyfcS4RKVRMQZM5K7HQXbuTgov1gkib8j+x3Ld4IgG4JOCxWSGUEp8/oeyBPUZ4Z8VSfzMR8ImksMMXodN56f59XIGlvSTjHX38UwwJ4QSd2zRCA3apRHvslw+UBDPDu/bnJcM3SaGi7VQKBgQC7h4C9ZHftjTm1wbilrAn9xRfCBFZoVZh6iWzporhCauML3wkUog6IMc6JC6LxnI+IVnRMyf1HpVuzTXKvECjlZUpAkvC5pM9CMk9K2PKvvzAQ6nhL+Z4ZuQEYfQ0sfy3ATj37jJuROICWFvYR0vkY9F5jecXiT4AKuu4I8YZd+QKBgQCUYNIGLXDmnG9wmKa0XYUgUnQwGZoekfLIH6krbScOVqF42iVsj9jZJY7as52ZRfbO3iP8nXB2KQxpjhoutEcdgWvIuyFFD76fVXj71e9/KA9my/SpJ6DXGHisJ8rbGmuw34fXyPXFGw4h21bxNddh9rZBHFj/NvrjhH6XPNwS0QKBgQCVgRGcVV6eqlxxDGorAGj6qav15zedldGjAtQiS9MRybHuwo9UWE4aCHh6ytO2AkRlMETYgc/oFJB6pUnoTZuC0gGr48fKF5xnEajP7wZVBsWUCvFkpUc7udfJY7ZcRmjOILdMHfICUfaQw4eO4N4ChJZngDjlTZWTbc9vTLqYbQ==

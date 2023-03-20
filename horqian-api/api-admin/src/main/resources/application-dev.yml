@@ -1,0 +1,60 @@
+server:
+  port: 8033
+
+spring:
+  datasource:
+    #注册驱动
+    url: jdbc:p6spy:mysql://43.140.251.164:3306/vedio_meeting?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&allowMultiQueries=true
+    #连接数据库的用户名
+    username: 41
+    #连接数据库的密码
+    password: 41
+    #驱动加载
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      filters: stat,slf4j # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      # 初始化大小，最小，最大
+      initial-size: 1
+      min-idle: 1
+      max-active: 20
+
+      max-wait: 60000 # 配置获取连接等待超时的时间
+      time-between-eviction-runs-millis: 60000 # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      min-evictable-idle-time-millis: 30000 #配置一个连接在池中最小生存的时间，单位是毫秒
+      validation-query: select 'x'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true # 打开PSCache，并且指定每个连接上PSCache的大小
+      max-pool-prepared-statement-per-connection-size: 20
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000 # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: '*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*'
+      stat-view-servlet:
+        enabled: true
+        login-username: admin
+        login-password: 123456
+        reset-enable: true
+
+  redis:
+    host: 43.140.251.164
+    port: 6379
+    # Redis服务器连接密码（默认为空）
+    password: Horqian123.
+    # 连接池最大连接数（使用负值表示没有限制） 默认 8
+    lettuce.pool.max-active: 8
+    # 连接池最大阻塞等待时间（使用负值表示没有限制） 默认 -1
+    lettuce.pool.max-wait: -1
+    # 连接池中的最大空闲连接 默认 8
+    lettuce.pool.max-idle: 8
+    # 连接池中的最小空闲连接 默认 0
+    lettuce.pool.min-idle: 0
+    database: 3
+    timeout: 5000
+
+logging:
+  level:
+    com.horqian.api.mapper: DEBUG
